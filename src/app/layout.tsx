@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Metadata } from 'next'
 import { Montserrat as FontSans } from 'next/font/google'
 

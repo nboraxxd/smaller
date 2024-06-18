@@ -6,8 +6,9 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
     "camelcase": "off",
+    "no-undef": "off",
     "no-extra-semi": "off",
-    "tailwindcss/no-custom-classname": ["warn", { "whitelist": ["toaster"] }]
+    "tailwindcss/no-custom-classname": ["warn", { "whitelist": [""] }]
   },
   "settings": {
     "tailwindcss": {
