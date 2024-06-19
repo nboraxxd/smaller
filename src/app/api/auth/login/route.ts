@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { HTTP_STATUS_CODE } from '@/constants/http-status-code'
 import { TokenPayload } from '@/types'
 import { LoginReqBody } from '@/types/auth.type'
-import { HttpError } from '@/lib/http'
+import { HttpError } from '@/utils/http'
 import authApi from '@/api-requests/auth.api'
 
 export async function POST(req: Request) {

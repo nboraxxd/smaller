@@ -1,14 +1,18 @@
 'use client'
 
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { ForbiddenError } from '@/utils/http'
+import { useLoginToServerMutation } from '@/lib/tanstack-query/use-auth'
 import { LoginSchema, LoginSchemaType } from '@/lib/schemas/auth.schema'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import Link from 'next/link'
+import { LoaderCircleIcon } from 'lucide-react'
+import { handleBrowserErrorApi } from '@/utils/error'
 
 export default function LoginForm() {
   const form = useForm<LoginSchemaType>({
@@ -19,9 +23,25 @@ export default function LoginForm() {
     },
   })
 
+  const loginMutation = useLoginToServerMutation()
+
+  async function onValid(values: LoginSchemaType) {
+    if (loginMutation.isPending) return
+
+    try {
+      await loginMutation.mutateAsync(values)
+    } catch (error: any) {
+      if (error instanceof ForbiddenError) {
+        form.setError('password', { type: 'server', message: error.payload.message })
+      } else {
+        handleBrowserErrorApi({ error, setError: form.setError })
+      }
+    }
+  }
+
   return (
     <Form {...form}>
-      <form className="w-full max-w-[600px] shrink-0 space-y-2" noValidate>
+      <form className="w-full max-w-[600px] shrink-0 space-y-2" noValidate onSubmit={form.handleSubmit(onValid)}>
         <div className="grid gap-4">
           <FormField
             control={form.control}
@@ -68,7 +88,8 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full gap-1.5" disabled={loginMutation.isPending}>
+            {loginMutation.isPending ? <LoaderCircleIcon className="size-4 animate-spin" /> : null}
             Đăng nhập
           </Button>
         </div>

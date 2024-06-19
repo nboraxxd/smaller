@@ -23,7 +23,13 @@ type BadRequestErrorPayload = {
   error?: string
   detail?: {
     [key: string]: string
-  }[]
+  }
+}
+
+type ForbiddenErrorPayload = {
+  message: string
+  error?: number
+  error_code?: 'TOKEN_EXPIRED' | 'TOKEN_INVALID'
 }
 
 export class HttpError extends Error {
@@ -46,6 +52,16 @@ export class BadRequestError extends HttpError {
 
   constructor(payload: BadRequestErrorPayload) {
     super({ status: HTTP_STATUS_CODE.BAD_REQUEST, payload, message: 'Bad Request Error' })
+    this.payload = payload
+  }
+}
+
+export class ForbiddenError extends HttpError {
+  status: typeof HTTP_STATUS_CODE.FORBIDDEN = HTTP_STATUS_CODE.FORBIDDEN
+  payload: ForbiddenErrorPayload
+
+  constructor(payload: ForbiddenErrorPayload) {
+    super({ status: HTTP_STATUS_CODE.FORBIDDEN, payload, message: 'Forbidden Error' })
     this.payload = payload
   }
 }
@@ -89,7 +105,11 @@ const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url:
   if (!res.ok) {
     if (res.status === HTTP_STATUS_CODE.BAD_REQUEST) {
       throw new BadRequestError(data.payload as BadRequestErrorPayload)
-    } else if (res.status === HTTP_STATUS_CODE.FORBIDDEN) {
+    } else if (res.status === HTTP_STATUS_CODE.FORBIDDEN || res.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
+      if (res.status === HTTP_STATUS_CODE.FORBIDDEN && !(payload as ForbiddenErrorPayload).error_code) {
+        throw new ForbiddenError(data.payload as ForbiddenErrorPayload)
+      }
+
       if (isBrowser && !clientLogoutRequest) {
         clientLogoutRequest = fetch('/api/auth/logout', {
           method: 'POST',
