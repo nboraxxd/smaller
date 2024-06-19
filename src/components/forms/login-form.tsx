@@ -2,17 +2,17 @@
 
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import { LoaderCircleIcon } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { ForbiddenError } from '@/utils/http'
+import { handleBrowserErrorApi } from '@/utils/error'
 import { useLoginToServerMutation } from '@/lib/tanstack-query/use-auth'
 import { LoginSchema, LoginSchemaType } from '@/lib/schemas/auth.schema'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import { LoaderCircleIcon } from 'lucide-react'
-import { handleBrowserErrorApi } from '@/utils/error'
 
 export default function LoginForm() {
   const form = useForm<LoginSchemaType>({
@@ -72,7 +72,7 @@ export default function LoginForm() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
                     <Link href="/forgot-password" className="text-sm font-semibold text-primary hover:text-primary/90">
-                      Forgot password?
+                      Quên mật khẩu?
                     </Link>
                   </div>
                   <Input

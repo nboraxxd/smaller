@@ -17,6 +17,8 @@ export const handleBrowserErrorApi = ({ error, setError }: { error: any; setErro
       } else {
         toast.error(error.payload.message)
       }
+    } else {
+      toast.error(error.payload.message)
     }
   } else if (error instanceof DOMException) {
     console.log('AbortError:', error.message)

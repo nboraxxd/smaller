@@ -73,7 +73,7 @@ const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url:
 
   const baseHeaders: HeadersInit = options?.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }
 
-  const baseUrl = options?.baseUrl || envConfig.NEXT_PUBLIC_API_ENDPOINT
+  const baseUrl = options?.baseUrl || envConfig.API_ENDPOINT
 
   const fullUrl = `${baseUrl}${addFirstSlashToUrl(url)}`
 
