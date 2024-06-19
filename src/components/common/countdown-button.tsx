@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentProps, ReactNode, useEffect, useState } from 'react'
 import { LoaderCircleIcon } from 'lucide-react'
 

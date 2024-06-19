@@ -1,15 +1,16 @@
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
-import { ModeToggle } from '@/components/common'
 
 export default function Homepage() {
   return (
-    <div className="flex items-center gap-8 p-8">
-      <ModeToggle />
+    <main className="flex gap-2">
       <Button asChild>
         <Link href="/login">Login</Link>
       </Button>
-    </div>
+      <Button asChild>
+        <Link href="/user">User</Link>
+      </Button>
+    </main>
   )
 }

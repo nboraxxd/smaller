@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import CountdownButton from '@/components/common/countdown-button'
+import { CountdownButton } from '@/components/common'
 
 export default function RegisterForm() {
   const [isWaiting, setIsWaiting] = useState(false)
@@ -39,9 +39,6 @@ export default function RegisterForm() {
 
     try {
       await registerMutation.mutateAsync(values)
-
-      form.resetField('password')
-      form.resetField('confirmPassword')
       setIsWaiting(true)
     } catch (error: any) {
       if (error instanceof BadRequestError && !error.payload.detail) {

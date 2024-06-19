@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { ForbiddenError } from '@/utils/http'
 import { handleBrowserErrorApi } from '@/utils/error'
-import { useLoginToServerMutation } from '@/lib/tanstack-query/use-auth'
+import { useGetCategoryToServerQuery, useLoginToServerMutation } from '@/lib/tanstack-query/use-auth'
 import { LoginSchema, LoginSchemaType } from '@/lib/schemas/auth.schema'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -22,6 +22,9 @@ export default function LoginForm() {
       password: '',
     },
   })
+
+  const { data: categoryResponse } = useGetCategoryToServerQuery()
+  console.log('🥴 ~ LoginForm ~ categoryResponse:', categoryResponse)
 
   const loginMutation = useLoginToServerMutation()
 
