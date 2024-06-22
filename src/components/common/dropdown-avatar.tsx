@@ -17,11 +17,12 @@ export default function DropdownAvatar() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
+        <Button variant="secondary" size="icon">
           <Avatar>
             <AvatarImage src={'/'} alt={'avt'} />
             <AvatarFallback>{'Bora'.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
+          <span className="sr-only">Mở menu tài khoản</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

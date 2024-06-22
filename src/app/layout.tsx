@@ -5,6 +5,7 @@ import { cn } from '@/utils'
 import { Toaster } from '@/components/ui/sonner'
 import { TanstackQueryProvider, ThemeProvider } from '@/components/provider'
 import './globals.css'
+import AuthProvider from '@/components/provider/auth-provider'
 
 const fontSans = FontSans({ subsets: ['vietnamese'], variable: '--font-sans' })
 
@@ -27,7 +28,7 @@ export default function RootLayout({
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <TanstackQueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
+            <AuthProvider>{children}</AuthProvider>
             <Toaster />
           </ThemeProvider>
         </TanstackQueryProvider>

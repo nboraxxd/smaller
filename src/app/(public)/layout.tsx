@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { Menu } from 'lucide-react'
+import { MenuIcon, SearchIcon } from 'lucide-react'
 
-import { NavItems } from '@/app/(public)/_components'
-import { SmallerIcon } from '@/components/icons'
-import { ModeToggle, DropdownAvatar } from '@/components/common'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { SmallerIcon } from '@/components/icons'
+import { NavButton, NavLink } from '@/app/(public)/_components'
 
 export default function Homepage({
   children,
@@ -14,39 +13,44 @@ export default function Homepage({
 }>) {
   return (
     <div className="relative flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex h-header-height items-center gap-4 border-b bg-background px-4 md:px-6">
+      <header className="sticky top-0 flex h-header-height items-center gap-4 border-b bg-background px-4 max-md:justify-between md:px-6">
+        <Link href="/" className="order-2 md:order-1">
+          <SmallerIcon className="size-8" />
+          <span className="sr-only">Smaller</span>
+        </Link>
+
         {/* Nav on desktop */}
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <Link href="/">
-            <SmallerIcon className="size-8" />
-            <span className="sr-only">Smaller</span>
-          </Link>
-          <NavItems className="shrink-0 text-muted-foreground transition-colors hover:text-foreground" />
+        <nav className="order-1 hidden flex-col gap-6 text-lg font-medium md:ml-10 md:flex md:flex-row md:items-center md:text-sm lg:ml-32">
+          <NavLink className="shrink-0 text-muted-foreground transition-colors hover:text-foreground" />
         </nav>
 
         {/* Nav on mobile */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-              <Menu className="size-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left">
-            <nav className="grid gap-6 text-lg font-medium">
-              <Link href="/">
-                <SmallerIcon className="size-7" />
-                <span className="sr-only">Smaller</span>
-              </Link>
+        <div className="flex gap-4">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <MenuIcon className="size-5" />
+                <span className="sr-only">Mở menu điều hướng</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <nav className="grid gap-6 text-lg font-medium">
+                <Link href="/">
+                  <SmallerIcon className="size-7" />
+                  <span className="sr-only">Smaller</span>
+                </Link>
+                <NavLink className="text-muted-foreground transition-colors hover:text-foreground" />
+              </nav>
+            </SheetContent>
+          </Sheet>
+          <Button variant="ghost" size="icon" className="md:hidden">
+            <SearchIcon className="size-5" />
+            <span className="sr-only">Tìm kiếm</span>
+          </Button>
+        </div>
 
-              <NavItems className="text-muted-foreground transition-colors hover:text-foreground" />
-            </nav>
-          </SheetContent>
-        </Sheet>
-
-        <div className="ml-auto flex items-center gap-4">
-          <ModeToggle />
-          <DropdownAvatar />
+        <div className="order-3 flex items-center gap-4 md:ml-auto">
+          <NavButton />
         </div>
       </header>
 

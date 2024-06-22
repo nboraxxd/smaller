@@ -1,1 +1,2 @@
-export { default as NavItems } from './nav-items'
+export { default as NavLink } from './nav-link'
+export { default as NavButton } from './nav-button'

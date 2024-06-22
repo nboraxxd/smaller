@@ -7,7 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { ForbiddenError } from '@/utils/http'
 import { handleBrowserErrorApi } from '@/utils/error'
-import { useGetCategoryToServerQuery, useLoginToServerMutation } from '@/lib/tanstack-query/use-auth'
+import { useAuthStore } from '@/lib/stores/auth-store'
+import { useLoginToServerMutation } from '@/lib/tanstack-query/use-auth'
 import { LoginSchema, LoginSchemaType } from '@/lib/schemas/auth.schema'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -15,6 +16,8 @@ import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
 
 export default function LoginForm() {
+  const setIsAuth = useAuthStore((state) => state.setIsAuth)
+
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -23,9 +26,6 @@ export default function LoginForm() {
     },
   })
 
-  const { data: categoryResponse } = useGetCategoryToServerQuery()
-  console.log('🥴 ~ LoginForm ~ categoryResponse:', categoryResponse)
-
   const loginMutation = useLoginToServerMutation()
 
   async function onValid(values: LoginSchemaType) {
@@ -33,6 +33,8 @@ export default function LoginForm() {
 
     try {
       await loginMutation.mutateAsync(values)
+
+      setIsAuth(true)
     } catch (error: any) {
       if (error instanceof ForbiddenError) {
         form.setError('password', { type: 'server', message: error.payload.message })
