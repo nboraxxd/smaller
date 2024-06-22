@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { LoaderCircleIcon } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,6 +17,8 @@ import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
 
 export default function LoginForm() {
+  const router = useRouter()
+
   const setIsAuth = useAuthStore((state) => state.setIsAuth)
 
   const form = useForm<LoginSchemaType>({
@@ -35,6 +38,8 @@ export default function LoginForm() {
       await loginMutation.mutateAsync(values)
 
       setIsAuth(true)
+      router.push('/')
+      router.refresh()
     } catch (error: any) {
       if (error instanceof ForbiddenError) {
         form.setError('password', { type: 'server', message: error.payload.message })
