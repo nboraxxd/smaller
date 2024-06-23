@@ -14,7 +14,7 @@ export default function Homepage({
 }>) {
   return (
     <div className="relative flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 h-header-height border-b">
+      <header className="sticky top-0 h-header-height border-b bg-background">
         <div className="container flex h-full items-center justify-between gap-4 sm:px-6 lg:px-8">
           <Link href="/" className="order-2 md:order-1">
             <SmallerIcon className="size-8" />
@@ -30,7 +30,7 @@ export default function Homepage({
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <MenuIcon className="size-5" />
-                  <span className="sr-only">Mở menu điều hướng</span>
+                  <span className="sr-only">Menu điều hướng</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">

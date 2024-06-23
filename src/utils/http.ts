@@ -68,7 +68,7 @@ export class ForbiddenError extends HttpError {
 
 let clientLogoutRequest: Promise<any> | null = null
 
-const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, options?: CustomOptions) => {
+const request = async <T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, options?: CustomOptions) => {
   const body = options?.body instanceof FormData ? options.body : JSON.stringify(options?.body)
 
   const baseHeaders: HeadersInit = options?.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }
@@ -94,7 +94,13 @@ const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url:
     body,
   })
 
-  const payload: Response = await res.json()
+  let payload: T
+
+  try {
+    payload = await res.json()
+  } catch (error) {
+    payload = error as T
+  }
 
   const data = {
     status: res.status,
@@ -122,13 +128,13 @@ const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url:
         } catch (error) {
           console.log('😰 clientLogoutRequest', error)
         } finally {
-          removeTokensFromLocalStorage()
+          removeTokensFromLocalStorage(true)
           clientLogoutRequest = null
           // Redirect về trang login có thể dẫn đến loop vô hạn
           // Nếu không không được xử lý đúng cách
           // Vì nếu rơi vào trường hợp tại trang Login, chúng ta có gọi các API cần access token
           // Mà access token đã bị xóa thì nó lại nhảy vào đây, và cứ thế nó sẽ bị lặp
-          window.location.href = '/login'
+          // window.location.href = '/login'
         }
       }
 
@@ -145,7 +151,7 @@ const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url:
     }
   }
 
-  // Client gọi đến route handle, từ đó route handle sẽ gọi đến backend để login
+  // Browser gọi đến route handle, từ đó route handle sẽ gọi đến backend để login
   if (isBrowser && addFirstSlashToUrl(url) === '/api/auth/login') {
     const { accessToken, refreshToken } = (payload as AuthResponse).data
 
@@ -153,8 +159,8 @@ const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url:
     setRefreshTokenToLocalStorage(refreshToken)
   }
 
-  // Client gọi đến route handle, từ đó route handle sẽ gọi đến backend để logout
-  if (isBrowser && addFirstSlashToUrl(url) === '/auth/logout') {
+  // Browser gọi đến route handle, từ đó route handle sẽ gọi đến backend để logout
+  if (isBrowser && addFirstSlashToUrl(url) === '/api/auth/logout') {
     removeTokensFromLocalStorage()
   }
 
