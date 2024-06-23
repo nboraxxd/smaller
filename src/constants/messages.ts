@@ -10,6 +10,6 @@ export const AUTH_MESSAGES = {
 } as const
 
 export const PRICE_FILTER_MESSAGES = {
-  PRICE_MUST_BE_POSITIVE_NUMBER: 'Price must be a positive number',
-  MAX_PRICE_GT_MIN_PRICE: 'Max price must be greater than min price',
+  PRICE_MUST_BE_POSITIVE_NUMBER: 'Giá phải là số dương',
+  MAX_PRICE_GT_MIN_PRICE: 'Giá tối đa phải lớn hơn giá tối thiểu',
 } as const

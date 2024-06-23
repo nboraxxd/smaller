@@ -4,13 +4,12 @@ import PromotionSection from './featured-section'
 
 export default function Homepage() {
   return (
-    <>
+    <main>
       <HeroSection />
-
       <div className="container pb-16 sm:px-6 lg:px-8 lg:pb-24">
         <CategoriesSection />
       </div>
       <PromotionSection />
-    </>
+    </main>
   )
 }

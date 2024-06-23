@@ -8,9 +8,7 @@ export default function PublicLayout({
   return (
     <div className="relative flex min-h-screen w-full flex-col">
       <Header />
-
-      <main>{children}</main>
-
+      {children}
       <Footer />
     </div>
   )

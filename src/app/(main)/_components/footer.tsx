@@ -94,12 +94,12 @@ export default function Footer() {
   return (
     <footer className="bg-background">
       <h2 className="sr-only">Footer</h2>
-      <div className="container pb-8 pt-16 lg:pt-24">
+      <div className="container pb-8 pt-16 sm:px-6 lg:px-8 lg:pt-24">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <SmallerIcon className="size-9" />
-            <p className="text-sm leading-6 text-muted-foreground">
-              Làm cho thế giới trở nên tốt đẹp hơn thông qua những sản phẩm tốt nhất.
+            <p className="text-balance text-sm leading-6 text-muted-foreground">
+              Sản phẩm chất lượng, dịch vụ tốt nhất, giá cả hợp lý, chúng tôi luôn cố gắng mang lại sự hài lòng cho bạn.
             </p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
