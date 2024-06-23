@@ -8,3 +8,10 @@ export type TokenPayload = {
 export type MessageResponse = {
   message: string
 }
+
+export type Paginate = {
+  currentPage: number | null
+  totalPage: number
+  count: number
+  perPage: number
+}

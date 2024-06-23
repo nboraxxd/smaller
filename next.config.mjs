@@ -13,6 +13,7 @@ const nextConfig = {
         port: '4000',
         pathname: '/static/**',
       },
+      { protocol: 'https', hostname: 'tailwindui.com', pathname: '/img/**' },
     ],
   },
 }
