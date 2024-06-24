@@ -9,15 +9,15 @@ import { ModeToggle, DropdownAvatar, Search } from '@/components/common'
 import { useAuthStore } from '@/lib/stores/auth-store'
 
 export default function NavButton() {
-  const [shouldRender, setShouldRender] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   const isAuth = useAuthStore((state) => state.isAuth)
 
   useEffect(() => {
-    setShouldRender(true)
+    setMounted(true)
   }, [])
 
-  if (!shouldRender) return <Substitude />
+  if (!mounted) return <Substitude />
 
   return (
     <>

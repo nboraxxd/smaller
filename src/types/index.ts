@@ -1,3 +1,11 @@
+export type ParamsProps = {
+  params: { id: string }
+}
+
+export type SearchParamsProps = {
+  searchParams: { [key: string]: string | undefined }
+}
+
 export type FieldUnion<T extends string> = T extends `${infer U},${infer Rest}` ? U | FieldUnion<Rest> : T
 
 export type TokenPayload = {
@@ -12,7 +20,7 @@ export type MessageResponse = {
 }
 
 export type Paginate = {
-  currentPage: number | null
+  currentPage: number
   totalPage: number
   count: number
   perPage: number

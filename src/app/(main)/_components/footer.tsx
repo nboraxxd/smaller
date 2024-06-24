@@ -94,7 +94,7 @@ export default function Footer() {
   return (
     <footer className="bg-background">
       <h2 className="sr-only">Footer</h2>
-      <div className="container pb-8 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+      <div className="container pb-8 sm:px-6 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <SmallerIcon className="size-9" />
@@ -165,7 +165,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+        <div className="mt-16 border-t border-gray-900/10">
           <p className="text-xs leading-5 text-gray-500">&copy; 2024 Smaller, Inc. All rights reserved.</p>
         </div>
       </div>

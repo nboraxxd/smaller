@@ -1,5 +1,11 @@
-import { Paginate } from '@/types'
-import { SortOptions } from '@/constants'
+import { FieldUnion, Paginate } from '@/types'
+import { productListQueryFields, productSortOptions } from '@/constants'
+
+export type ProductSortOptionsKey = keyof typeof productSortOptions
+
+export type ProductSortOptionsValue = (typeof productSortOptions)[ProductSortOptionsKey]
+
+export type ProductListFieldType = FieldUnion<typeof productListQueryFields>
 
 type Badge =
   | {
@@ -49,7 +55,7 @@ type Specification = {
 }
 
 export type ProductParameters = {
-  sort?: keyof typeof SortOptions
+  sort?: ProductSortOptionsValue
   id?: string
   name?: string
   fields?: string
@@ -120,4 +126,10 @@ export type CategoriesResponse = {
 
 export type CategoryResponse = {
   data: Category | null
+}
+
+export type ProductsSearchParams = {
+  [key in keyof Omit<ProductParameters, 'fields' | 'limit' | 'sort' | 'id'>]: string
+} & {
+  sort?: ProductSortOptionsValue
 }

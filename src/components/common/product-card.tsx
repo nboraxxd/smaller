@@ -3,37 +3,37 @@ import Image from 'next/image'
 import { StarIcon } from 'lucide-react'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ProductType } from '@/types/product.type'
-import { FieldUnion } from '@/types'
-import { productErrorImages, productListQueryFields } from '@/constants'
-import { formatCurrency } from '@/utils'
-
-type FieldType = FieldUnion<typeof productListQueryFields>
+import { ProductListFieldType, ProductType } from '@/types/product.type'
+import { productErrorImage } from '@/constants'
+import { cn, formatCurrency } from '@/utils'
 
 interface Props {
-  product: Pick<ProductType, FieldType>
+  product: Pick<ProductType, ProductListFieldType>
   category?: string
+  className?: string
 }
 
-export default function ProductCard({ product, category }: Props) {
+export default function ProductCard({ product, category, className }: Props) {
   let image = product.images[0].medium_url
 
-  if (productErrorImages.includes(image) && product.configurable_products && product.configurable_products.length > 0) {
+  if (image === productErrorImage && product.configurable_products && product.configurable_products.length > 0) {
     image =
       product.configurable_products[1]?.images[0]?.medium_url || product.configurable_products[0]?.images[0]?.medium_url
   }
 
   return (
-    <Card className="flex flex-col">
+    <Card className={cn('flex flex-col', className)}>
       <CardHeader className="relative justify-center p-0">
         {/* Image */}
         <Link href={product.slug} className="aspect-h-1 aspect-w-1">
           <Image
             src={image}
             alt={product.name}
-            width={220}
-            height={220}
-            className="size-full rounded-t-xl bg-white object-contain"
+            width={256}
+            height={256}
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lPAAAAA=="
+            className="size-full rounded-t-xl bg-white object-contain text-slate-900"
           />
         </Link>
       </CardHeader>

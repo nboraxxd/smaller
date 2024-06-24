@@ -1,73 +1,73 @@
-import { SortOptions } from '@/constants'
+import { productSortOptions } from '@/constants'
 
 export const PRODUCTS_SORT = [
-  { name: 'Mới nhất', value: SortOptions.NEWEST },
-  { name: 'Bán chạy', value: SortOptions.TOP_SELL },
-  { name: 'Đánh giá tốt', value: SortOptions.RATING_DESC },
-  { name: 'Giảm nhiều nhất', value: SortOptions.DISCOUNT_DESC },
-  { name: 'Giá giảm dần', value: SortOptions.PRICE_DESC },
-  { name: 'Giá tăng dần', value: SortOptions.PRICE_ASC },
+  { name: 'Mới nhất', value: productSortOptions.NEWEST },
+  { name: 'Bán chạy', value: productSortOptions.TOP_SELL },
+  { name: 'Đánh giá tốt', value: productSortOptions.RATING_DESC },
+  { name: 'Giảm nhiều nhất', value: productSortOptions.DISCOUNT_DESC },
+  { name: 'Giá giảm dần', value: productSortOptions.PRICE_DESC },
+  { name: 'Giá tăng dần', value: productSortOptions.PRICE_ASC },
 ] as const
 
 export const CATEGORIES_IMAGE = [
   {
     id: 1789,
-    image: '/images/categories/5ff8037c36eb321988e59fb1.png',
+    image: '/images/categories/1789.png',
   },
   {
     id: 4221,
-    image: '/images/categories/5ff8037c36eb321988e59fb2.png',
+    image: '/images/categories/4221.png',
   },
   {
     id: 1815,
-    image: '/images/categories/5ff8037c36eb321988e59fb3.png',
+    image: '/images/categories/1815.png',
   },
   {
     id: 1846,
-    image: '/images/categories/5ff8037c36eb321988e59fb4.png',
+    image: '/images/categories/1846.png',
   },
   {
     id: 1801,
-    image: '/images/categories/5ff8037c36eb321988e59fb5.png',
+    image: '/images/categories/1801.png',
   },
   {
     id: 1882,
-    image: '/images/categories/5ff8037c36eb321988e59fb6.png',
+    image: '/images/categories/1882.png',
   },
   {
     id: 1883,
-    image: '/images/categories/5ff8037c36eb321988e59fb7.png',
+    image: '/images/categories/1883.png',
   },
   {
     id: 4384,
-    image: '/images/categories/5ff8037c36eb321988e59fb8.png',
+    image: '/images/categories/4384.png',
   },
   {
     id: 2549,
-    image: '/images/categories/5ff8037c36eb321988e59fb9.png',
+    image: '/images/categories/2549.png',
   },
   {
     id: 1520,
-    image: '/images/categories/5ff8037c36eb321988e59fba.png',
+    image: '/images/categories/1520.png',
   },
   {
     id: 1975,
-    image: '/images/categories/5ff8037c36eb321988e59fbb.png',
+    image: '/images/categories/1975.png',
   },
   {
     id: 8594,
-    image: '/images/categories/5ff8037c36eb321988e59fbc.png',
+    image: '/images/categories/8594.png',
   },
   {
     id: 17166,
-    image: '/images/categories/5ff8037c36eb321988e59fbd.png',
+    image: '/images/categories/17166.png',
   },
   {
     id: 8322,
-    image: '/images/categories/5ff8037c36eb321988e59fbe.png',
+    image: '/images/categories/8322.png',
   },
   {
     id: 11312,
-    image: '/images/categories/5ff8037c36eb321988e59fbf.png',
+    image: '/images/categories/11312.png',
   },
 ] as const
