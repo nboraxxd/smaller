@@ -14,6 +14,7 @@ const nextConfig = {
         pathname: '/static/**',
       },
       { protocol: 'https', hostname: 'tailwindui.com', pathname: '/img/**' },
+      { protocol: 'https', hostname: 'salt.tikicdn.com' },
     ],
   },
 }

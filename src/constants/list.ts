@@ -11,63 +11,63 @@ export const PRODUCTS_SORT = [
 
 export const CATEGORIES_IMAGE = [
   {
-    _id: '5ff8037c36eb321988e59fb1',
+    id: 1789,
     image: '/images/categories/5ff8037c36eb321988e59fb1.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb2',
+    id: 4221,
     image: '/images/categories/5ff8037c36eb321988e59fb2.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb3',
+    id: 1815,
     image: '/images/categories/5ff8037c36eb321988e59fb3.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb4',
+    id: 1846,
     image: '/images/categories/5ff8037c36eb321988e59fb4.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb5',
+    id: 1801,
     image: '/images/categories/5ff8037c36eb321988e59fb5.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb6',
+    id: 1882,
     image: '/images/categories/5ff8037c36eb321988e59fb6.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb7',
+    id: 1883,
     image: '/images/categories/5ff8037c36eb321988e59fb7.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb8',
+    id: 4384,
     image: '/images/categories/5ff8037c36eb321988e59fb8.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fb9',
+    id: 2549,
     image: '/images/categories/5ff8037c36eb321988e59fb9.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fba',
+    id: 1520,
     image: '/images/categories/5ff8037c36eb321988e59fba.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fbb',
+    id: 1975,
     image: '/images/categories/5ff8037c36eb321988e59fbb.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fbc',
+    id: 8594,
     image: '/images/categories/5ff8037c36eb321988e59fbc.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fbd',
+    id: 17166,
     image: '/images/categories/5ff8037c36eb321988e59fbd.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fbe',
+    id: 8322,
     image: '/images/categories/5ff8037c36eb321988e59fbe.png',
   },
   {
-    _id: '5ff8037c36eb321988e59fbf',
+    id: 11312,
     image: '/images/categories/5ff8037c36eb321988e59fbf.png',
   },
 ] as const

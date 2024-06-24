@@ -1,13 +1,13 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import keyBy from 'lodash/keyBy'
+import { Url } from 'next/dist/shared/lib/router/router'
 
 import productApi from '@/api-requests/product.api'
 import { CATEGORIES_IMAGE } from '@/constants/list'
-import Link from 'next/link'
-import { Url } from 'next/dist/shared/lib/router/router'
 
 export default async function CategoriesSection() {
-  const categoriesImage = keyBy(CATEGORIES_IMAGE, '_id')
+  const categoriesImage = keyBy(CATEGORIES_IMAGE, 'id')
 
   const categoriesResponse = await productApi.getCategoriesFromServerToBackend()
 
@@ -28,14 +28,14 @@ export default async function CategoriesSection() {
         <div className="flex gap-3 xl:gap-5">
           <Category href="/products" title="Tất cả sản phẩm" image="/images/categories/all.png" />
           {categoriesTop.map((category) => {
-            const categoryImage = categoriesImage[category._id].image
-            return <Category key={category._id} href={category.slug} title={category.title} image={categoryImage} />
+            const categoryImage = categoriesImage[category.id].image
+            return <Category key={category.id} href={category.slug} title={category.title} image={categoryImage} />
           })}
         </div>
         <div className="flex gap-3 xl:gap-5">
           {categoriesBottom.map((category) => {
-            const categoryImage = categoriesImage[category._id].image
-            return <Category key={category._id} href={category.slug} title={category.title} image={categoryImage} />
+            const categoryImage = categoriesImage[category.id].image
+            return <Category key={category.id} href={category.slug} title={category.title} image={categoryImage} />
           })}
         </div>
       </div>

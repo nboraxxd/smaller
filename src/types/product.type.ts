@@ -61,7 +61,7 @@ export type ProductParameters = {
   categories?: string
 }
 
-export type Product = {
+export type ProductType = {
   _id: string
   id: number
   sku: string
@@ -100,7 +100,7 @@ export type ProductsResponse<P> = {
 }
 
 export type ProductResponse = {
-  data: Product
+  data: ProductType
 }
 
 export type Category = {

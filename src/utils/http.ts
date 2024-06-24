@@ -14,6 +14,7 @@ import {
 type CustomOptions = Omit<RequestInit, 'method'> & {
   baseUrl?: string
   headers?: HeadersInit & { Authorization?: string }
+  params?: string | Record<string, string> | URLSearchParams | string[][]
 }
 
 type CustomOptionsExcluedBody = Omit<CustomOptions, 'body'>
@@ -75,7 +76,9 @@ const request = async <T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string
 
   const baseUrl = options?.baseUrl || envConfig.API_ENDPOINT
 
-  const fullUrl = `${baseUrl}${addFirstSlashToUrl(url)}`
+  const searchParams = new URLSearchParams(options?.params)
+
+  const fullUrl = `${baseUrl}${addFirstSlashToUrl(url)}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
 
   if (isBrowser) {
     const accessToken = getAccessTokenFromLocalStorage()
