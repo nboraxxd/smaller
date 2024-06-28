@@ -15,6 +15,7 @@ const nextConfig = {
       },
       { protocol: 'https', hostname: 'tailwindui.com', pathname: '/img/**' },
       { protocol: 'https', hostname: 'salt.tikicdn.com' },
+      { protocol: 'https', hostname: 'firebasestorage.googleapis.com', pathname: '/v0/b/**' },
     ],
   },
 }

@@ -69,7 +69,11 @@ export class ForbiddenError extends HttpError {
 
 let clientLogoutRequest: Promise<any> | null = null
 
-const request = async <T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, options?: CustomOptions) => {
+const request = async <T>(
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+  url: string,
+  options?: CustomOptions
+) => {
   const body = options?.body instanceof FormData ? options.body : JSON.stringify(options?.body)
 
   const baseHeaders: HeadersInit = options?.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }
@@ -179,6 +183,9 @@ const http = {
   },
   put<Response>(url: string, body: any, options?: CustomOptionsExcluedBody) {
     return request<Response>('PUT', url, { ...options, body })
+  },
+  patch<Response>(url: string, body: any, options?: CustomOptionsExcluedBody) {
+    return request<Response>('PATCH', url, { ...options, body })
   },
   delete<Response>(url: string, options?: CustomOptionsExcluedBody) {
     return request<Response>('DELETE', url, options)

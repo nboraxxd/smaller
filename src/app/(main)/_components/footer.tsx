@@ -94,7 +94,7 @@ export default function Footer() {
   return (
     <footer className="bg-background">
       <h2 className="sr-only">Footer</h2>
-      <div className="container pb-8 sm:px-6 lg:px-8">
+      <div className="container py-8 sm:px-6 md:pt-12 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <SmallerIcon className="size-9" />

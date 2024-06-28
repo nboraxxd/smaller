@@ -54,7 +54,7 @@ export default function DropdownAvatar() {
               src={getUserResponse.payload.data.avatar ?? undefined}
               alt={getUserResponse.payload.data.name}
             />
-            <AvatarFallback>{getUserResponse.payload.data.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{getUserResponse.payload.data.name?.slice(0, 2).toUpperCase() || 'S'}</AvatarFallback>
           </Avatar>
           <span className="sr-only">Tài khoản</span>
         </Button>

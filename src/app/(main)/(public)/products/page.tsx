@@ -44,10 +44,10 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
   })
 
   return (
-    <main className="container py-8 sm:px-6 md:py-16 lg:px-8">
+    <main className="container pt-8 sm:px-6 md:pt-12 lg:px-8">
       <div className="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8">
         {/* Filter in desktop */}
-        <div className="scrollbar-hide sticky top-[calc(var(--header-height)+4rem)] hidden h-[calc(100vh-var(--header-height))] overflow-y-auto pb-[calc(var(--header-height)+4rem)] lg:block">
+        <div className="scrollbar-hide sticky top-[calc(var(--header-height)+3rem)] hidden h-[calc(100vh-var(--header-height))] overflow-y-auto pb-[calc(var(--header-height)+3rem)] lg:block">
           <div>
             <h3 className="text-2xl font-medium">Categories</h3>
             <ul className="mt-4 space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-foreground">
@@ -114,7 +114,7 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
               </Sheet>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 xl:grid-cols-5">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 xl:grid-cols-5">
             {productsResponse.payload.data.map((product) => {
               const category = categoryById[product.categories]
               return <ProductCard key={product.id} product={product} category={category?.title} />

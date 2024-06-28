@@ -1,5 +1,11 @@
 import { productSortOptions } from '@/constants'
 
+export const GENDERS = [
+  { label: 'Nam', value: 'male' },
+  { label: 'Nữ', value: 'female' },
+  { label: 'Khác', value: 'other' },
+] as const
+
 export const PRODUCTS_SORT = [
   { name: 'Mới nhất', value: productSortOptions.NEWEST },
   { name: 'Bán chạy', value: productSortOptions.TOP_SELL },

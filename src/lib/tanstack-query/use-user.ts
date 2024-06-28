@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import userApi from '@/api-requests/user.api'
 import { QUERY_KEY } from '@/constants/query-key'
@@ -20,5 +20,16 @@ export function useUserQuery(enabled: boolean = true) {
     queryFn: userApi.getUserFromBrowserToBackend,
     queryKey: [QUERY_KEY.USER],
     enabled,
+  })
+}
+
+export function useUpdateUserMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: userApi.updateUserFromBrowserToBackend,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER] })
+    },
   })
 }
