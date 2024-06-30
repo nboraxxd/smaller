@@ -33,3 +33,9 @@ export function useUpdateUserMutation() {
     },
   })
 }
+
+export function useChangePasswordMutation() {
+  return useMutation({
+    mutationFn: userApi.changePasswordFromBrowserToBackend,
+  })
+}

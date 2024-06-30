@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CalendarIcon, Upload } from 'lucide-react'
+import { CalendarIcon, LoaderCircleIcon, Upload } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -73,6 +73,8 @@ export default function UpdateProfileForm() {
     }
   }, [form, getUserResponse?.payload.data, isSuccessGetUser])
 
+  const isFormProcessing = !isSuccessGetUser || uploadImageMutation.isPending || updateUserMutation.isPending
+
   const dobFromDate = new Date()
   dobFromDate.setFullYear(dobFromDate.getFullYear() - 120)
 
@@ -85,7 +87,7 @@ export default function UpdateProfileForm() {
   }
 
   async function onSubmit(values: UpdateMeSchemaType) {
-    if (!isSuccessGetUser || uploadImageMutation.isPending || updateUserMutation.isPending) return
+    if (isFormProcessing) return
 
     const { name, birthday, gender, fb, phone, avatar } = getUserResponse.payload.data
 
@@ -127,7 +129,7 @@ export default function UpdateProfileForm() {
   }
 
   function handleReset() {
-    if (!isSuccessGetUser) return
+    if (isFormProcessing) return
 
     const { name, birthday, gender, fb, phone, avatar } = getUserResponse.payload.data
 
@@ -162,14 +164,10 @@ export default function UpdateProfileForm() {
               <FormField
                 control={form.control}
                 name="avatar"
-                render={({ field }) => {
+                render={() => {
                   function onChangeAvatarInput(ev: React.ChangeEvent<HTMLInputElement>) {
                     const file = ev.target.files?.[0]
-
-                    if (file) {
-                      setFile(file)
-                      field.onChange('http:localhost:3000/' + field.name)
-                    }
+                    file && setFile(file)
                   }
                   return (
                     <FormItem>
@@ -333,10 +331,13 @@ export default function UpdateProfileForm() {
               </div>
             </div>
             <div className=" mt-8 flex items-center gap-2 md:ml-auto">
-              <Button variant="outline" size="sm" type="reset">
+              <Button variant="outline" size="sm" type="reset" disabled={isFormProcessing}>
                 Reset
               </Button>
-              <Button size="sm" type="submit" className="gap-1.5">
+              <Button size="sm" type="submit" className="gap-1.5" disabled={isFormProcessing}>
+                {uploadImageMutation.isPending || updateUserMutation.isPending ? (
+                  <LoaderCircleIcon className="size-4 animate-spin" />
+                ) : null}
                 Cập nhật
               </Button>
             </div>

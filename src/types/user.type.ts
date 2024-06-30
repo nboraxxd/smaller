@@ -26,15 +26,10 @@ export type UpdateMeReqBody = {
   phone?: string | null
 }
 
-export type RegisterResponse = {
-  success: boolean
-  message: string
+export type ChangePasswordReqBody = {
+  currentPassword: string
+  newPassword: string
 }
-
-export type ResendEmailResponse = {
-  message: string
-}
-
 export type UserResponse = {
   data: User
 }
