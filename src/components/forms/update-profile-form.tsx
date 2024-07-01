@@ -164,37 +164,34 @@ export default function UpdateProfileForm() {
               <FormField
                 control={form.control}
                 name="avatar"
-                render={() => {
-                  function onChangeAvatarInput(ev: React.ChangeEvent<HTMLInputElement>) {
-                    const file = ev.target.files?.[0]
-                    file && setFile(file)
-                  }
-                  return (
-                    <FormItem>
-                      <div className="flex items-start justify-start gap-2 md:flex-col">
-                        <Avatar className="aspect-1 size-[100px] rounded-md object-cover">
-                          <AvatarImage src={previewAvatar ?? undefined} />
-                          <AvatarFallback className="rounded-none p-1.5 text-center">Avatar</AvatarFallback>
-                        </Avatar>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          ref={avatarInputRef}
-                          onChange={onChangeAvatarInput}
-                        />
-                        <button
-                          className="flex aspect-1 w-[100px] items-center justify-center rounded-md border border-dashed"
-                          type="button"
-                          onClick={() => avatarInputRef.current?.click()}
-                        >
-                          <Upload className="size-4 text-muted-foreground" />
-                          <span className="sr-only">Upload</span>
-                        </button>
-                      </div>
-                    </FormItem>
-                  )
-                }}
+                render={() => (
+                  <FormItem>
+                    <div className="flex items-start justify-start gap-2 md:flex-col">
+                      <Avatar className="aspect-1 size-[100px] rounded-md object-cover">
+                        <AvatarImage src={previewAvatar ?? undefined} />
+                        <AvatarFallback className="rounded-none p-1.5 text-center">Avatar</AvatarFallback>
+                      </Avatar>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        ref={avatarInputRef}
+                        onChange={(ev) => {
+                          const file = ev.target.files?.[0]
+                          file && setFile(file)
+                        }}
+                      />
+                      <button
+                        className="flex aspect-1 w-[100px] items-center justify-center rounded-md border border-dashed"
+                        type="button"
+                        onClick={() => avatarInputRef.current?.click()}
+                      >
+                        <Upload className="size-4 text-muted-foreground" />
+                        <span className="sr-only">Upload</span>
+                      </button>
+                    </div>
+                  </FormItem>
+                )}
               />
 
               <div className="flex w-full grow flex-col gap-4">

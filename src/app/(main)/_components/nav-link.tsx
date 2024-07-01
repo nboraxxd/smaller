@@ -18,6 +18,10 @@ const items = [
     title: 'Điện thoại',
     href: '/phone',
   },
+  {
+    title: 'Tài khoản',
+    href: '/user',
+  },
 ]
 
 export default function NavLink({ className }: { className?: string }) {
