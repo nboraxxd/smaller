@@ -6,9 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { UseMutateAsyncFunction } from '@tanstack/react-query'
 
 import { handleBrowserErrorApi } from '@/utils/error'
-import { getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 import { useAuthStore } from '@/lib/stores/auth-store'
 import { useLogoutToServerMutation } from '@/lib/tanstack-query/use-auth'
+import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 
 export default function LogoutPage() {
   const logoutRef = useRef<UseMutateAsyncFunction | null>(null)
@@ -16,6 +16,7 @@ export default function LogoutPage() {
   const router = useRouter()
 
   const searchParams = useSearchParams()
+  const accessTokenFromUrl = searchParams.get('accessToken')
   const refreshTokenFromUrl = searchParams.get('refreshToken')
 
   const setIsAuth = useAuthStore((state) => state.setIsAuth)
@@ -25,7 +26,11 @@ export default function LogoutPage() {
   useEffect(() => {
     let timeout: NodeJS.Timeout | null = null
 
-    if (!logoutRef.current && refreshTokenFromUrl && refreshTokenFromUrl === getRefreshTokenFromLocalStorage()) {
+    if (
+      !logoutRef.current &&
+      ((refreshTokenFromUrl && refreshTokenFromUrl === getRefreshTokenFromLocalStorage()) ||
+        (accessTokenFromUrl && accessTokenFromUrl === getAccessTokenFromLocalStorage()))
+    ) {
       ;(async () => {
         logoutRef.current = mutateAsync
 
@@ -52,7 +57,7 @@ export default function LogoutPage() {
     return () => {
       if (timeout) clearTimeout(timeout)
     }
-  }, [mutateAsync, refreshTokenFromUrl, router, setIsAuth])
+  }, [accessTokenFromUrl, mutateAsync, refreshTokenFromUrl, router, setIsAuth])
 
   return null
 }

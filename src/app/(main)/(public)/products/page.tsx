@@ -52,7 +52,7 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
             <h3 className="text-2xl font-medium">Categories</h3>
             <ul className="mt-4 space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-foreground">
               <li>
-                <Link href="/product">Tất cả sản phẩm</Link>
+                <Link href="/products">Tất cả sản phẩm</Link>
               </li>
               {categoriesResponse.payload.data.map((category) => (
                 <li key={category.id}>

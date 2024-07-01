@@ -9,7 +9,7 @@ const authApi = {
   loginFromBrowserToServer: (body: LoginReqBody) =>
     http.post<AuthResponse>(`/api/auth/login`, body, { baseUrl: envConfig.NEXT_URL }),
 
-  loginFromServerToBackend: (body: LoginReqBody) => http.post<AuthResponse>(`${AUTH_PREFIX}/login-test`, body),
+  loginFromServerToBackend: (body: LoginReqBody) => http.post<AuthResponse>(`${AUTH_PREFIX}/login`, body),
 
   logoutFromBrowserToServer: () => http.post<MessageResponse>(`/api/auth/logout`, {}, { baseUrl: envConfig.NEXT_URL }),
 }

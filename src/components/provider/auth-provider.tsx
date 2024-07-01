@@ -23,7 +23,7 @@ export default function AuthProvider({ children }: Props) {
       setIsAuth(false)
       router.push('/login')
       router.refresh()
-      toast.warning('Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.')
+      toast.warning('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại. (force)')
     }
 
     localStorageEventTarget.addEventListener('removeLocalStorage', handleRemoveAuth)

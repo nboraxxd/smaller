@@ -20,7 +20,7 @@ const items = [
   },
   {
     title: 'Tài khoản',
-    href: '/user',
+    href: '/user/profile',
   },
 ]
 

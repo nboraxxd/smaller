@@ -11,7 +11,7 @@ export function POST() {
 
   if (!accessToken || !refreshToken) {
     return Response.json({
-      message: 'Không nhận được access token hoặc refresh token nhưng vẫn thực hiện đăng xuất thành công',
+      message: 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại. (missing token)',
     })
   }
 

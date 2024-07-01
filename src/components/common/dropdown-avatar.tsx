@@ -65,7 +65,7 @@ export default function DropdownAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/user" className="cursor-pointer">
+          <Link href="/user/profile" className="cursor-pointer">
             Tài khoản
           </Link>
         </DropdownMenuItem>

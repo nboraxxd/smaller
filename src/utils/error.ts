@@ -1,7 +1,8 @@
 import { toast } from 'sonner'
 import { UseFormSetError } from 'react-hook-form'
 
-import { BadRequestError } from '@/utils/http'
+import { BadRequestError, HttpError } from '@/utils/http'
+import { HTTP_STATUS_CODE } from '@/constants/http-status-code'
 
 export const handleBrowserErrorApi = ({ error, setError }: { error: any; setError?: UseFormSetError<any> }) => {
   if (error instanceof BadRequestError) {
@@ -22,6 +23,11 @@ export const handleBrowserErrorApi = ({ error, setError }: { error: any; setErro
     }
   } else if (error instanceof DOMException) {
     console.log('AbortError:', error.message)
+  } else if (
+    error instanceof HttpError &&
+    (error.status === HTTP_STATUS_CODE.UNAUTHORIZED || error.status === HTTP_STATUS_CODE.FORBIDDEN)
+  ) {
+    console.log('😰 Unauthorized', error.payload.message)
   } else {
     toast.error(error.payload?.message || error.toString())
   }

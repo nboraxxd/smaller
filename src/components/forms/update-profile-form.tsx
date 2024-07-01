@@ -159,14 +159,14 @@ export default function UpdateProfileForm() {
             <CardTitle>Thông tin cá nhân</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col gap-8 md:flex-row md:px-4">
+            <div className="flex flex-col gap-x-8 gap-y-4 md:flex-row md:px-4">
               {/* Avatar */}
               <FormField
                 control={form.control}
                 name="avatar"
                 render={() => (
                   <FormItem>
-                    <div className="flex items-start justify-start gap-2 md:flex-col">
+                    <div className="flex justify-center gap-2 md:flex-col md:justify-start">
                       <Avatar className="aspect-1 size-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatar ?? undefined} />
                         <AvatarFallback className="rounded-none p-1.5 text-center">Avatar</AvatarFallback>
