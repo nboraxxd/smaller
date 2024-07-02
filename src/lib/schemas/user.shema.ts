@@ -41,11 +41,22 @@ export const UpdateMeSchema = z.object({
     .nullable(),
 })
 
-export const ChangePasswordSchema = z.object({
-  currentPassword: password,
-  newPassword: password,
-  confirmNewPassword: password,
-})
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: password,
+    newPassword: password,
+    confirmNewPassword: password,
+  })
+  .strict()
+  .superRefine(({ newPassword, confirmNewPassword }, ctx) => {
+    if (newPassword !== confirmNewPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: AUTH_MESSAGES.PASSWORD_NOT_MATCH,
+        path: ['confirmNewPassword'],
+      })
+    }
+  })
 
 export type RegisterSchemaType = z.infer<typeof RegisterSchema>
 export type UpdateMeSchemaType = z.infer<typeof UpdateMeSchema>
