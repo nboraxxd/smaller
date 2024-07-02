@@ -10,8 +10,10 @@ type RefreshTokenResponse = {
 const AUTH_PREFIX = '/authentication/v2'
 
 const authApi = {
+  refreshTokenFromBrowserToServerRequest: null as Promise<{ status: number; payload: RefreshTokenResponse }> | null,
+
   // API OF BACKEND SERVER
-  loginFromServerToBackend: (body: LoginReqBody) => http.post<AuthResponse>(`${AUTH_PREFIX}/login`, body),
+  loginFromServerToBackend: (body: LoginReqBody) => http.post<AuthResponse>(`${AUTH_PREFIX}/login-test`, body),
 
   refreshTokenFromServerToBackend: (refreshToken: string) =>
     http.post<AuthResponse>(`${AUTH_PREFIX}/refresh-token`, { refreshToken }),
@@ -22,8 +24,22 @@ const authApi = {
 
   logoutFromBrowserToServer: () => http.post<MessageResponse>(`/api/auth/logout`, {}, { baseUrl: envConfig.NEXT_URL }),
 
-  refreshTokenFromBrowserToServer: () =>
-    http.post<RefreshTokenResponse>(`/api/auth/refresh-token`, {}, { baseUrl: envConfig.NEXT_URL }),
+  async refreshTokenFromBrowserToServer() {
+    if (this.refreshTokenFromBrowserToServerRequest) {
+      return this.refreshTokenFromBrowserToServerRequest
+    }
+
+    this.refreshTokenFromBrowserToServerRequest = http.post<RefreshTokenResponse>(
+      `/api/auth/refresh-token`,
+      {},
+      { baseUrl: envConfig.NEXT_URL }
+    )
+
+    const response = await this.refreshTokenFromBrowserToServerRequest
+
+    this.refreshTokenFromBrowserToServerRequest = null
+    return response
+  },
 }
 
 export default authApi
