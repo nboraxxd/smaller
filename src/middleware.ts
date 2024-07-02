@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get('refreshToken')?.value
 
   // Redirect to login page if not logged in (no refresh token in cookie) and trying to access protected paths
-  if (protectedPaths.some((item) => pathname.startsWith(item)) && !refreshToken) {
+  if (protectedPaths.some((item) => pathname.startsWith(item)) && !refreshToken && !accessToken) {
     const url = new URL('/login', request.url)
     url.searchParams.set('next', pathname)
 
@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
 
   // Logged in but access token has expired
   if (protectedPaths.some((item) => pathname.startsWith(item)) && refreshToken && !accessToken) {
-    const url = new URL('/logout', request.url)
+    const url = new URL('/refresh-token', request.url)
     url.searchParams.set('refreshToken', refreshToken)
     url.searchParams.set('next', pathname)
 

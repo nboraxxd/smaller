@@ -8,13 +8,11 @@ import { HTTP_STATUS_CODE } from '@/constants/http-status-code'
 export async function POST() {
   const cookieStore = cookies()
   const refreshToken = cookieStore.get('refreshToken')?.value
-  const accessToken = cookieStore.get('accessToken')?.value
 
   if (!refreshToken) {
     return Response.json({ message: 'Refresh token not found' }, { status: HTTP_STATUS_CODE.UNAUTHORIZED })
   }
 
-  console.log('🔥 ~ POST ~ refreshToken:', accessToken)
   try {
     const { payload } = await authApi.refreshTokenFromServerToBackend(refreshToken)
 
