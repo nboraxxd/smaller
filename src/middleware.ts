@@ -25,13 +25,13 @@ export function middleware(request: NextRequest) {
   }
 
   // Logged in but access token has expired
-  if (protectedPaths.some((item) => pathname.startsWith(item)) && refreshToken && !accessToken) {
-    const url = new URL('/refresh-token', request.url)
-    url.searchParams.set('refreshToken', refreshToken)
-    url.searchParams.set('next', pathname)
+  // if (protectedPaths.some((item) => pathname.startsWith(item)) && refreshToken && !accessToken) {
+    // const url = new URL('/refresh-token', request.url)
+    // url.searchParams.set('refreshToken', refreshToken)
+    // url.searchParams.set('next', pathname)
 
-    return NextResponse.redirect(url)
-  }
+    // return NextResponse.redirect(url)
+  // }
 
   // Redirect to /user/profile if user navigates to /user
   if (pathname === '/user') {
