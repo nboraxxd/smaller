@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
-import { HTTP_STATUS_CODE } from '@/constants/http-status-code'
+import authApi from '@/api-requests/auth.api'
 import { TokenPayload } from '@/types'
 import { LoginReqBody } from '@/types/auth.type'
 import { HttpError } from '@/utils/http'
-import authApi from '@/api-requests/auth.api'
+import { HTTP_STATUS_CODE } from '@/constants/http-status-code'
 
 export async function POST(req: Request) {
   const body = (await req.json()) as LoginReqBody
