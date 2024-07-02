@@ -13,7 +13,7 @@ const authApi = {
   refreshTokenFromBrowserToServerRequest: null as Promise<{ status: number; payload: RefreshTokenResponse }> | null,
 
   // API OF BACKEND SERVER
-  loginFromServerToBackend: (body: LoginReqBody) => http.post<AuthResponse>(`${AUTH_PREFIX}/login`, body),
+  loginFromServerToBackend: (body: LoginReqBody) => http.post<AuthResponse>(`${AUTH_PREFIX}/login-test`, body),
 
   refreshTokenFromServerToBackend: (refreshToken: string) =>
     http.post<AuthResponse>(`${AUTH_PREFIX}/refresh-token`, { refreshToken }),

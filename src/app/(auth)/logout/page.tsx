@@ -1,14 +1,15 @@
 'use client'
 
 import { toast } from 'sonner'
+import { LoaderCircleIcon } from 'lucide-react'
 import { Suspense, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { UseMutateAsyncFunction } from '@tanstack/react-query'
 
-import { handleBrowserErrorApi } from '@/utils/error'
-import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 import { useAuthStore } from '@/lib/stores/auth-store'
 import { useLogoutToServerMutation } from '@/lib/tanstack-query/use-auth'
+import { handleBrowserErrorApi } from '@/utils/error'
+import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 
 function LogoutPageWithoutSuspense() {
   const logoutRef = useRef<UseMutateAsyncFunction | null>(null)
@@ -59,13 +60,24 @@ function LogoutPageWithoutSuspense() {
     }
   }, [accessTokenFromUrl, mutateAsync, refreshTokenFromUrl, router, setIsAuth])
 
-  return null
+  return <LogoutTemplate />
 }
 
 export default function LogoutPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<LogoutTemplate />}>
       <LogoutPageWithoutSuspense />
     </Suspense>
+  )
+}
+
+function LogoutTemplate() {
+  return (
+    <div className="flex h-screen flex-col items-center justify-center">
+      <p className="flex items-center gap-x-3">
+        <LoaderCircleIcon className="size-8 animate-spin" />
+        <span className="font-medium text-foreground">Đang đăng xuất...</span>
+      </p>
+    </div>
   )
 }
