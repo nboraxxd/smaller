@@ -1,16 +1,16 @@
 'use client'
 
 import { toast } from 'sonner'
-import { useEffect, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { UseMutateAsyncFunction } from '@tanstack/react-query'
 
 import { handleBrowserErrorApi } from '@/utils/error'
+import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 import { useAuthStore } from '@/lib/stores/auth-store'
 import { useLogoutToServerMutation } from '@/lib/tanstack-query/use-auth'
-import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 
-export default function LogoutPage() {
+function LogoutPageWithoutSuspense() {
   const logoutRef = useRef<UseMutateAsyncFunction | null>(null)
 
   const router = useRouter()
@@ -60,4 +60,12 @@ export default function LogoutPage() {
   }, [accessTokenFromUrl, mutateAsync, refreshTokenFromUrl, router, setIsAuth])
 
   return null
+}
+
+export default function LogoutPage() {
+  return (
+    <Suspense>
+      <LogoutPageWithoutSuspense />
+    </Suspense>
+  )
 }

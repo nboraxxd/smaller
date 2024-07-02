@@ -2,7 +2,7 @@
 
 import ms from 'ms'
 import { useEffect } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import envConfig from '@/constants/config'
 import { checkAndRefreshToken } from '@/utils'
@@ -13,7 +13,6 @@ const UNAUTHENTICATED_PATHS = ['/login', '/register', '/logout', '/refresh-token
 
 export default function RefreshToken() {
   const pathname = usePathname()
-  const router = useRouter()
 
   const setIsAuth = useAuthStore((state) => state.setIsAuth)
 
@@ -22,21 +21,15 @@ export default function RefreshToken() {
 
     let interval: NodeJS.Timeout | null = null
 
-    function onError() {
-      if (interval) {
-        clearInterval(interval)
-      }
-
-      setIsAuth(false)
-    }
-
     // Phải gọi 1 lần đầu tiên vì interval sẽ chỉ chạy sau thời gian TIMEOUT
     checkAndRefreshToken({
       onSuccess: () => {
         console.log('🚀 first checkAndRefreshToken')
         setIsAuth(true)
       },
-      onError,
+      onError: () => {
+        if (interval) clearInterval(interval)
+      },
     })
 
     // `refreshTokenCheckInterval` phải nhỏ hơn 1/3 thời gian hết hạn của access token
@@ -48,7 +41,9 @@ export default function RefreshToken() {
           onSuccess: () => {
             console.log('🚀 other checkAndRefreshToken')
           },
-          onError,
+          onError: () => {
+            if (interval) clearInterval(interval)
+          },
         }),
       refreshTokenCheckInterval
     )
@@ -56,7 +51,7 @@ export default function RefreshToken() {
     return () => {
       if (interval) clearInterval(interval)
     }
-  }, [pathname, router, setIsAuth])
+  }, [pathname, setIsAuth])
 
   return null
 }

@@ -1,17 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { checkAndRefreshToken } from '@/utils'
 import { getRefreshTokenFromLocalStorage } from '@/utils/local-storage'
 import { useAuthStore } from '@/lib/stores/auth-store'
 
-export default function RefreshTokenPage() {
+function RefreshTokenPageWithoutSuspense() {
   const setIsAuth = useAuthStore((state) => state.setIsAuth)
 
   const router = useRouter()
-  const pathname = usePathname()
 
   const searchParams = useSearchParams()
   const nextPath = searchParams.get('next')
@@ -24,16 +23,21 @@ export default function RefreshTokenPage() {
           console.log('🚀 super first checkAndRefreshToken')
           setIsAuth(true)
 
-          const from = new URLSearchParams()
-          from.set('from', pathname)
-
-          router.push(nextPath ? `${nextPath}/?${from}` : `/?${from}`)
+          router.push(nextPath ? `${nextPath}` : `/`)
         },
       })
     } else {
       router.push('/')
     }
-  }, [nextPath, pathname, refreshTokenFromUrl, router, setIsAuth])
+  }, [nextPath, refreshTokenFromUrl, router, setIsAuth])
 
   return null
+}
+
+export default function RefreshTokenPage() {
+  return (
+    <Suspense>
+      <RefreshTokenPageWithoutSuspense />
+    </Suspense>
+  )
 }

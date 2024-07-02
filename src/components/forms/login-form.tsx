@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { LoaderCircleIcon } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,9 +15,19 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { useEffect } from 'react'
+import {
+  getAccessTokenFromLocalStorage,
+  getRefreshTokenFromLocalStorage,
+  removeTokensFromLocalStorage,
+} from '@/utils/local-storage'
 
 export default function LoginForm() {
   const router = useRouter()
+  const pathname = usePathname()
+
+  const searchParams = useSearchParams()
+  const next = searchParams.get('next')
 
   const setIsAuth = useAuthStore((state) => state.setIsAuth)
 
@@ -31,6 +41,14 @@ export default function LoginForm() {
 
   const loginMutation = useLoginToServerMutation()
 
+  useEffect(() => {
+    const accessToken = getAccessTokenFromLocalStorage()
+    const refreshToken = getRefreshTokenFromLocalStorage()
+    if (next && (accessToken || refreshToken)) {
+      removeTokensFromLocalStorage()
+    }
+  }, [next])
+
   async function onValid(values: LoginSchemaType) {
     if (loginMutation.isPending) return
 
@@ -38,7 +56,11 @@ export default function LoginForm() {
       await loginMutation.mutateAsync(values)
 
       setIsAuth(true)
-      router.push('/')
+
+      const from = new URLSearchParams()
+      from.set('from', pathname)
+
+      router.push(next ? `${next}/?${from}` : '/')
       router.refresh()
     } catch (error: any) {
       if (error instanceof ForbiddenError) {
@@ -80,7 +102,7 @@ export default function LoginForm() {
               <FormItem>
                 <div className="grid gap-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Mật khẩu</Label>
                     <Link href="/forgot-password" className="text-sm font-semibold text-primary hover:text-primary/90">
                       Quên mật khẩu?
                     </Link>

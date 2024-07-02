@@ -7,6 +7,7 @@ import authApi from '@/api-requests/auth.api'
 import {
   getAccessTokenFromLocalStorage,
   getRefreshTokenFromLocalStorage,
+  removeTokensFromLocalStorage,
   setAccessTokenToLocalStorage,
 } from '@/utils/local-storage'
 
@@ -69,7 +70,11 @@ export async function checkAndRefreshToken(params?: { onSuccess?: () => void; on
   // Thời gian còn lại của access token nhỏ hơn 1/3 thời gian hết hạn của access token thì tiến hành refresh token
   const shouldRefreshToken = accessTokenDecoded.exp - now < (accessTokenDecoded.exp - accessTokenDecoded.iat) / 3
 
-  if (refreshTokenDecoded.exp <= now) return
+  // Trường hợp BẮT BUỘC PHẢI refresh token nhưng khi đó refresh token đã hết hạn thì không xử lý nữa
+  if (shouldRefreshToken && refreshTokenDecoded.exp <= now) {
+    removeTokensFromLocalStorage(true)
+    return params?.onError && params.onError()
+  }
 
   if (shouldRefreshToken) {
     try {

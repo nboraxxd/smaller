@@ -33,6 +33,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Redirect to /user/profile if user navigates to /user
   if (pathname === '/user') {
     return NextResponse.redirect(new URL('/user/profile', request.url))
   }
@@ -42,5 +43,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/login', '/register', '/user/:path*'],
+  matcher: ['/login', '/register', '/user/:path*', '/logout', '/refresh-token'],
 }

@@ -76,7 +76,9 @@ export default function FilterSection() {
                       <FormControl>
                         <RadioGroupItem value={(arr.length - index).toString()} />
                       </FormControl>
-                      <FormLabel className="font-normal">{arr.length - index} sao trở lên</FormLabel>
+                      <FormLabel className="font-normal">
+                        {arr.length - index} {arr.length - index === 5 ? 'sao' : 'sao trở lên'}
+                      </FormLabel>
                     </FormItem>
                   ))}
                 </RadioGroup>

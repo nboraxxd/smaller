@@ -1,5 +1,9 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { SmallerIcon } from '@/components/icons'
 import { LoginForm } from '@/components/forms'
 
@@ -15,7 +19,9 @@ export default function LoginPage() {
       </h1>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <LoginForm />
+        <Suspense fallback={<LoginFormFallback />}>
+          <LoginForm />
+        </Suspense>
 
         <div className="mt-2 text-right">
           <Link href="/resend-email" className="text-sm font-semibold leading-6 text-primary hover:text-primary/90">
@@ -30,6 +36,29 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+    </div>
+  )
+}
+
+function LoginFormFallback() {
+  return (
+    <div className="grid gap-4">
+      <div className="flex flex-col gap-2">
+        <Label>Email</Label>
+        <Input readOnly placeholder="bruce@wayne.dc" />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">Mật khẩu</Label>
+          <p className="text-sm font-semibold text-primary hover:text-primary/90">Quên mật khẩu?</p>
+        </div>
+        <Input readOnly placeholder="••••••••" />
+      </div>
+
+      <Button className="w-full" disabled>
+        Đăng nhập
+      </Button>
     </div>
   )
 }
