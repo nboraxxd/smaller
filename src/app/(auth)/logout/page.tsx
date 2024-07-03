@@ -60,18 +60,18 @@ function LogoutPageWithoutSuspense() {
     }
   }, [accessTokenFromUrl, mutateAsync, refreshTokenFromUrl, router, setIsAuth])
 
-  return <LogoutTemplate />
+  return <LogoutView />
 }
 
 export default function LogoutPage() {
   return (
-    <Suspense fallback={<LogoutTemplate />}>
+    <Suspense fallback={<LogoutView />}>
       <LogoutPageWithoutSuspense />
     </Suspense>
   )
 }
 
-function LogoutTemplate() {
+function LogoutView() {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <p className="flex items-center gap-x-3">

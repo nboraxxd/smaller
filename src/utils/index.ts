@@ -46,6 +46,17 @@ export const formatCurrency = (number: number) => {
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number).replace('₫', '').trim()
 }
 
+export function extractCategorySlug(categorySlugInput: string) {
+  const parts = categorySlugInput.split(/-id[^-]*$/)
+  return parts[0]
+}
+
+export function extractProductId(productSlugInput: string) {
+  const parts = productSlugInput.split('-p')
+
+  return parts[parts.length - 1]
+}
+
 export async function checkAndRefreshToken(params?: { onSuccess?: () => void; onError?: () => void }) {
   // Không nên đưa logic lấy access token và refresh token ra khỏi function `checkAndRefreshToken`
   // Vì để mỗi lần mà gọi function `checkAndRefreshToken` thì sẽ lấy access token và refresh token mới
@@ -68,7 +79,7 @@ export async function checkAndRefreshToken(params?: { onSuccess?: () => void; on
   // Thời gian còn lại của access token sẽ tính theo công thức: accessTokenDecoded.exp - now
   // Thời gian hết hạn của access token sẽ tính theo công thức: accessTokenDecoded.exp - accessTokenDecoded.iat
   // Thời gian còn lại của access token nhỏ hơn 1/3 thời gian hết hạn của access token thì tiến hành refresh token
-  const shouldRefreshToken = accessTokenDecoded.exp - now < (accessTokenDecoded.exp - accessTokenDecoded.iat) / 3
+  const shouldRefreshToken = accessTokenDecoded.exp - now < (accessTokenDecoded.exp - accessTokenDecoded.iat) / 5
 
   // Trường hợp BẮT BUỘC PHẢI refresh token nhưng khi đó refresh token đã hết hạn thì không xử lý nữa
   if (shouldRefreshToken && refreshTokenDecoded.exp <= now) {

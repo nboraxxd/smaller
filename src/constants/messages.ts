@@ -11,5 +11,5 @@ export const AUTH_MESSAGES = {
 
 export const PRICE_FILTER_MESSAGES = {
   PRICE_MUST_BE_POSITIVE_NUMBER: 'Giá phải là số dương',
-  MAX_PRICE_GT_MIN_PRICE: 'Giá tối đa phải lớn hơn giá tối thiểu',
+  PRICE_RANGE_INVALID: 'Khoảng giá không hợp lệ',
 } as const

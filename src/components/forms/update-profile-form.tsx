@@ -1,31 +1,31 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { CalendarIcon, LoaderCircleIcon, Upload } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { UpdateMeSchema, UpdateMeSchemaType } from '@/lib/schemas/user.shema'
-import { cn } from '@/utils'
-import { format } from 'date-fns'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { GENDERS } from '@/constants/list'
-import { useUpdateUserMutation, useUserQuery } from '@/lib/tanstack-query/use-user'
-import { useUploadImageMutation } from '@/lib/tanstack-query/use-file'
-import { toast } from 'sonner'
-import { handleBrowserErrorApi } from '@/utils/error'
 import omitBy from 'lodash/omitBy'
 import isUndefined from 'lodash/isUndefined'
+import { toast } from 'sonner'
+import { format } from 'date-fns'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { CalendarIcon, LoaderCircleIcon, Upload } from 'lucide-react'
+
+import { cn } from '@/utils'
+import { handleBrowserErrorApi } from '@/utils/error'
+import { GENDERS } from '@/constants/list'
+import { useUploadImageMutation } from '@/lib/tanstack-query/use-file'
+import { UpdateMeSchema, UpdateMeSchemaType } from '@/lib/schemas/user.shema'
+import { useUpdateUserMutation, useUserQuery } from '@/lib/tanstack-query/use-user'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 
 export default function UpdateProfileForm() {
-  const [openCalendar, setOpenCalendar] = useState(false)
+  // const [openCalendar, setOpenCalendar] = useState(false)
   const [file, setFile] = useState<File | null>(null)
 
   const avatarInputRef = useRef<HTMLInputElement>(null)
@@ -216,7 +216,7 @@ export default function UpdateProfileForm() {
                   render={({ field }) => (
                     <FormItem className="grid w-full gap-3 space-y-0">
                       <FormLabel>Ngày sinh</FormLabel>
-                      <Popover open={openCalendar} onOpenChange={setOpenCalendar} modal={true}>
+                      <Popover modal={true}>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
@@ -237,7 +237,7 @@ export default function UpdateProfileForm() {
                             selected={field.value ? new Date(field.value) : undefined}
                             onSelect={(ev) => {
                               field.onChange(ev ? ev.toISOString() : null)
-                              setOpenCalendar(false)
+                              // setOpenCalendar(false)
                             }}
                             today={field.value ? new Date(field.value) : new Date()}
                             initialFocus

@@ -1,6 +1,11 @@
 'use client'
 
+import queryString from 'query-string'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { Url } from 'next/dist/shared/lib/router/router'
+
 import { cn } from '@/utils'
+import useMediaQuery from '@/hook/use-media-query'
 import {
   Pagination,
   PaginationContent,
@@ -10,32 +15,36 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import useMediaQuery from '@/hook/use-media-query'
-import { Url } from 'next/dist/shared/lib/router/router'
+import { omit } from 'lodash'
 
 interface Props {
   currentPage: number
   pageSize: number
-  pathname: string
 }
 
 const DESKTOP_RANGE = 2
 const MOBILE_RANGE = 1
 
-export default function AutoPagination({ currentPage, pageSize, pathname }: Props) {
-  const isMediumAndUp = useMediaQuery({ minWidth: 768 })
+export default function AutoPagination({ currentPage, pageSize }: Props) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const newSearchParams = omit(queryString.parse(searchParams.toString()), 'page')
 
+  const isMediumAndUp = useMediaQuery({ minWidth: 768 })
   const range = isMediumAndUp ? DESKTOP_RANGE : MOBILE_RANGE
 
   function renderPagination() {
     if (currentPage <= range + 1) {
       return Array.from(Array(range * 2 + 2)).map((_, i) => {
         const pageNumber = i + 1
+
+        if (pageNumber > pageSize) return null
+
         if (pageNumber <= range * 2 + 1) {
           return (
             <NumberedButton
               key={i}
-              href={{ pathname, query: { page: pageNumber } }}
+              href={{ pathname, query: { ...newSearchParams, page: pageNumber } }}
               isActive={pageNumber === currentPage}
               pageNumber={pageNumber}
             />
@@ -52,11 +61,13 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
       return Array.from(Array(range * 2 + 3)).map((_, i) => {
         const pageNumber = pageSize - range * 2 - 2 + i
 
+        if (pageNumber <= 0) return null
+
         if (i === 0)
           return (
             <NumberedButton
               key={i}
-              href={{ pathname, query: { page: pageNumber } }}
+              href={{ pathname, query: { ...newSearchParams, page: pageNumber } }}
               isActive={pageNumber === currentPage}
               pageNumber={pageNumber}
             />
@@ -66,7 +77,7 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
           return (
             <NumberedButton
               key={i}
-              href={{ pathname, query: { page: pageNumber } }}
+              href={{ pathname, query: { ...newSearchParams, page: pageNumber } }}
               isActive={pageNumber === currentPage}
               pageNumber={pageNumber}
             />
@@ -76,7 +87,7 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
           return (
             <NumberedButton
               key={i}
-              href={{ pathname, query: { page: pageNumber } }}
+              href={{ pathname, query: { ...newSearchParams, page: pageNumber } }}
               isActive={pageNumber === currentPage}
               pageNumber={pageNumber}
             />
@@ -97,7 +108,7 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
           return (
             <NumberedButton
               key={i}
-              href={{ pathname, query: { page: 1 } }}
+              href={{ pathname, query: queryString.stringify(searchParams) }}
               isActive={pageNumber === currentPage}
               pageNumber={1}
             />
@@ -114,7 +125,7 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
           return (
             <NumberedButton
               key={i}
-              href={{ pathname, query: { page: pageNumber } }}
+              href={{ pathname, query: { ...newSearchParams, page: pageNumber } }}
               isActive={pageNumber === currentPage}
               pageNumber={pageNumber}
             />
@@ -141,6 +152,7 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
             href={{
               pathname,
               query: {
+                ...newSearchParams,
                 page: currentPage - 1,
               },
             }}
@@ -162,6 +174,7 @@ export default function AutoPagination({ currentPage, pageSize, pathname }: Prop
             href={{
               pathname,
               query: {
+                ...newSearchParams,
                 page: currentPage + 1,
               },
             }}

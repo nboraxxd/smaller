@@ -3,8 +3,9 @@ import Image from 'next/image'
 import keyBy from 'lodash/keyBy'
 import { Url } from 'next/dist/shared/lib/router/router'
 
-import productApi from '@/api-requests/product.api'
+import { extractCategorySlug } from '@/utils'
 import { CATEGORIES_IMAGE } from '@/constants/list'
+import productApi from '@/api-requests/product.api'
 
 export default async function CategoriesSection() {
   const categoriesImage = keyBy(CATEGORIES_IMAGE, 'id')
@@ -29,13 +30,31 @@ export default async function CategoriesSection() {
           <Category href="/products" title="Tất cả sản phẩm" image="/images/categories/all.png" />
           {categoriesTop.map((category) => {
             const categoryImage = categoriesImage[category.id].image
-            return <Category key={category.id} href={category.slug} title={category.title} image={categoryImage} />
+            const categorySlug = extractCategorySlug(category.slug)
+
+            return (
+              <Category
+                key={category.id}
+                href={`/${categorySlug}/${category.id}`}
+                title={category.title}
+                image={categoryImage}
+              />
+            )
           })}
         </div>
         <div className="flex gap-3 xl:gap-5">
           {categoriesBottom.map((category) => {
             const categoryImage = categoriesImage[category.id].image
-            return <Category key={category.id} href={category.slug} title={category.title} image={categoryImage} />
+            const categorySlug = extractCategorySlug(category.slug)
+
+            return (
+              <Category
+                key={category.id}
+                href={`/${categorySlug}/${category.id}`}
+                title={category.title}
+                image={categoryImage}
+              />
+            )
           })}
         </div>
       </div>

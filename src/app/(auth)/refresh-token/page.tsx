@@ -32,18 +32,18 @@ function RefreshTokenPageWithoutSuspense() {
     }
   }, [nextPath, refreshTokenFromUrl, router, setIsAuth])
 
-  return <RefreshTokenTemplate />
+  return <RefreshTokenView />
 }
 
 export default function RefreshTokenPage() {
   return (
-    <Suspense fallback={<RefreshTokenTemplate />}>
+    <Suspense fallback={<RefreshTokenView />}>
       <RefreshTokenPageWithoutSuspense />
     </Suspense>
   )
 }
 
-function RefreshTokenTemplate() {
+function RefreshTokenView() {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <p className="flex items-center gap-x-3">

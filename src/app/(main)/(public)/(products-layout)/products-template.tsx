@@ -1,21 +1,25 @@
 import Link from 'next/link'
 import keyBy from 'lodash/keyBy'
-import { FilterIcon } from 'lucide-react'
-
-import productApi from '@/api-requests/product.api'
-import { SearchParamsProps } from '@/types'
-import { ProductListFieldType, ProductSortOptionsValue, ProductType, ProductsSearchParams } from '@/types/product.type'
-import { PRODUCTS_SORT } from '@/constants/list'
-import { productSortOptions, productListQueryFields } from '@/constants'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { AutoPagination, ProductCard } from '@/components/common'
-import FilterSection from './filter-section'
 import omitBy from 'lodash/omitBy'
 import isUndefined from 'lodash/isUndefined'
+import { FilterIcon } from 'lucide-react'
 
-export default async function ProdudctsPage({ searchParams }: SearchParamsProps) {
+import { SearchParamsProps } from '@/types'
+import { extractCategorySlug } from '@/utils'
+import productApi from '@/api-requests/product.api'
+import { productSortOptions, productListQueryFields } from '@/constants'
+import { ProductListFieldType, ProductSortOptionsValue, ProductType, ProductsSearchParams } from '@/types/product.type'
+import { Button } from '@/components/ui/button'
+import { AutoPagination, ProductCard } from '@/components/common'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import Sort from './sort'
+import FilterSection from './filter-section'
+
+interface Props extends SearchParamsProps {
+  categoryId?: string
+}
+
+export default async function ProductsTemplate({ searchParams, categoryId }: Props) {
   const { name, page, minPrice, maxPrice, filterRating } = searchParams
 
   const categoriesResponse = await productApi.getCategoriesFromServerToBackend()
@@ -30,9 +34,16 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
           : undefined,
       name,
       page: Number(page) ? page : undefined,
-      minPrice,
-      maxPrice,
-      filterRating,
+      minPrice:
+        Number(minPrice) && Number(minPrice) >= 0 && Number(minPrice) <= Number(maxPrice ?? Infinity)
+          ? minPrice
+          : undefined,
+      maxPrice:
+        Number(maxPrice) && Number(maxPrice) >= 0 && Number(maxPrice) >= Number(minPrice ?? -Infinity)
+          ? maxPrice
+          : undefined,
+      filterRating: Number(filterRating) > 5 || Number(filterRating) < 1 ? undefined : filterRating,
+      categories: categoryId,
     },
     isUndefined
   )
@@ -54,11 +65,15 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
               <li>
                 <Link href="/products">Tất cả sản phẩm</Link>
               </li>
-              {categoriesResponse.payload.data.map((category) => (
-                <li key={category.id}>
-                  <Link href={category.slug}>{category.title}</Link>
-                </li>
-              ))}
+              {categoriesResponse.payload.data.map((category) => {
+                const categorySlug = extractCategorySlug(category.slug)
+
+                return (
+                  <li key={category.id}>
+                    <Link href={`/${categorySlug}/${category.id}`}>{category.title}</Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
           <FilterSection />
@@ -69,20 +84,7 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
 
             <div className="ml-auto flex items-center gap-6">
               {/* Sort */}
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sắp xếp" />
-                </SelectTrigger>
-                <SelectContent align="end">
-                  <SelectGroup>
-                    {PRODUCTS_SORT.map((sort) => (
-                      <SelectItem key={sort.value} value={sort.value}>
-                        {sort.name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Sort />
 
               {/* Filter */}
               <Sheet>
@@ -125,7 +127,6 @@ export default async function ProdudctsPage({ searchParams }: SearchParamsProps)
               <AutoPagination
                 currentPage={productsResponse.payload.paginate.currentPage}
                 pageSize={productsResponse.payload.paginate.totalPage}
-                pathname="/products"
               />
             </div>
           ) : null}
