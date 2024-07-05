@@ -104,11 +104,14 @@ export default async function ProductsTemplate({ searchParams, categoryId }: Pro
                   </SheetHeader>
                   <nav className="mt-6 grid gap-6 border-y border-border py-6 text-lg font-medium">
                     <ul className="space-y-4 text-sm font-medium text-foreground">
-                      {categoriesResponse.payload.data.map((category) => (
-                        <li key={category.id}>
-                          <Link href={category.slug}>{category.title}</Link>
-                        </li>
-                      ))}
+                      {categoriesResponse.payload.data.map((category) => {
+                        const categorySlug = extractCategorySlug(category.slug)
+                        return (
+                          <li key={category.id}>
+                            <Link href={`/${categorySlug}/${category.id}`}>{category.title}</Link>
+                          </li>
+                        )
+                      })}
                     </ul>
                   </nav>
                   <FilterSection />

@@ -34,6 +34,7 @@ export default function ProductCard({ product, category, className }: Props) {
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lPAAAAA=="
             className="size-full rounded-t-xl bg-white object-contain text-slate-900"
+            unoptimized
           />
         </Link>
       </CardHeader>
