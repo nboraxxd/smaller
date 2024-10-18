@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import NextTopLoader from 'nextjs-toploader'
 import { Montserrat as FontSans } from 'next/font/google'
 
 import { cn } from '@/utils'
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={cn('bg-background font-sans antialiased', fontSans.variable)}>
         <TanstackQueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <NextTopLoader showSpinner={false} />
             <AuthProvider>{children}</AuthProvider>
             <RefreshToken />
             <Toaster />

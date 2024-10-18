@@ -3,7 +3,7 @@ import ProductsTemplate from '../../products-template'
 
 interface Props extends SearchParamsProps {
   params: {
-    categorySlug: string
+    slug: string
     categoryId: string
   }
 }

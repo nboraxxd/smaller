@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { HeartIcon, SearchIcon, ShoppingCartIcon, UserIcon } from 'lucide-react'
 
+import { useAuthStore } from '@/lib/stores/auth-store'
 import { Button } from '@/components/ui/button'
 import { ModeToggle, DropdownAvatar, Search } from '@/components/common'
-import { useAuthStore } from '@/lib/stores/auth-store'
 
 export default function NavButton() {
   const [mounted, setMounted] = useState(false)

@@ -85,7 +85,6 @@ export default async function ProductsTemplate({ searchParams, categoryId }: Pro
             <div className="ml-auto flex items-center gap-6">
               {/* Sort */}
               <Sort />
-
               {/* Filter */}
               <Sheet>
                 <SheetTrigger asChild>
@@ -122,6 +121,7 @@ export default async function ProductsTemplate({ searchParams, categoryId }: Pro
           <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 xl:grid-cols-5">
             {productsResponse.payload.data.map((product) => {
               const category = categoryById[product.categories]
+
               return <ProductCard key={product.id} product={product} category={category?.title} />
             })}
           </div>

@@ -25,14 +25,12 @@ export default function ProductCard({ product, category, className }: Props) {
     <Card className={cn('flex flex-col', className)}>
       <CardHeader className="relative justify-center p-0">
         {/* Image */}
-        <Link href={product.slug} className="aspect-h-1 aspect-w-1">
+        <Link href={`/${product.slug}`} className="aspect-h-1 aspect-w-1">
           <Image
             src={image}
             alt={product.name}
             width={256}
             height={256}
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lPAAAAA=="
             className="size-full rounded-t-xl bg-white object-contain text-slate-900"
             unoptimized
           />
@@ -42,7 +40,7 @@ export default function ProductCard({ product, category, className }: Props) {
       <CardContent className="flex grow flex-col gap-3 p-3 md:gap-4 md:p-4">
         {/* Name */}
         <CardTitle>
-          <Link href={product.slug} className="line-clamp-2">
+          <Link href={`/${product.slug}`} className="line-clamp-2">
             {product.name}
           </Link>
         </CardTitle>
