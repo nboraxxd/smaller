@@ -60,7 +60,7 @@ function LogoutPageWithoutSuspense() {
     }
   }, [accessTokenFromUrl, mutateAsync, refreshTokenFromUrl, router, setIsAuth])
 
-  return <LogoutView />
+  return refreshTokenFromUrl || accessTokenFromUrl ? <LogoutView /> : null
 }
 
 export default function LogoutPage() {
